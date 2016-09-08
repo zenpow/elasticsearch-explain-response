@@ -18,10 +18,12 @@ module Elasticsearch
 
             def render_score(score)
               value = if !@plain_score && score > 1_000
-                sprintf("%1.2g", score.round(2))
-              else
-                score.round(2).to_s
-              end
+                        sprintf("%1.2g", score.round(2))
+                      elsif score > 0.1
+                        score.round(2).to_s
+                      else
+                        sprintf("%.3g", score)
+                      end
               ansi(value, :magenta, :bright)
             end
 
